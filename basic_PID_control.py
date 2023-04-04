@@ -71,13 +71,15 @@ env.render()
 rewardsum = 0
 previous_error = 0
 
+reward_arr = []
+
 for x in [1, 0] * 500:
     try:
         error = find_error(observation, previous_error)
 
     except:
         error = -15
-        print("error")
+        # print("Error")
         pass
 
     steering = pid(error, previous_error)
@@ -89,8 +91,13 @@ for x in [1, 0] * 500:
     rewardsum = rewardsum + reward
     print(observation)
     print("Reward", rewardsum)
+    reward_arr.append(rewardsum)
 
-    # if terminated or truncated:
-    if rewardsum >= 300:
+    if terminated or truncated:
         env.close()
         break
+
+print(reward_arr)
+plt.plot(reward_arr)
+plt.show()
+
