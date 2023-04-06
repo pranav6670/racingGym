@@ -11,7 +11,8 @@ model = PPO("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=25000)
 model.save("ppo_cartpole")
 
-del model# remove to demonstrate saving and loading
+# remove to demonstrate saving and loading
+del model
 
 model = PPO.load("ppo_cartpole")
 

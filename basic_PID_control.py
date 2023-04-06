@@ -4,8 +4,17 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-def find_error(observation, previous_error):
+def visualize_images(blur, canny):
+    # Concatenate the images horizontally
+    combined_image = np.hstack((blur, canny))
 
+    # Show the combined image
+    imS = cv2.resize(combined_image, (200, 300))
+    cv2.imshow("Blur, Edges", imS)
+    cv2.waitKey(1)
+
+
+def find_error(observation, previous_error):
     def green_mask(observation):
         hsv = cv2.cvtColor(observation, cv2.COLOR_BGR2HSV)
         mask_green = cv2.inRange(hsv, (36, 25, 25), (70, 255, 255))
@@ -29,16 +38,15 @@ def find_error(observation, previous_error):
         return canny
 
     cropped = observation[63:65, 24:73]
-
     green = green_mask(cropped)
     grey = gray_scale(green)
     blur = blur_image(grey)
     canny = canny_edge_detector(blur)
+    visualize_images(blur, canny)
 
     # find all non zero values in the cropped strip.
     # These non zero points(white pixels) corresponds to the edges of the road
     nz = cv2.findNonZero(canny)
-
     # horizontal cordinates of center of the road in the cropped slice
     mid = 24
 
@@ -95,9 +103,9 @@ for x in [1, 0] * 500:
 
     if terminated or truncated:
         env.close()
+        cv2.destroyAllWindows()
         break
 
 print(reward_arr)
 plt.plot(reward_arr)
 plt.show()
-
