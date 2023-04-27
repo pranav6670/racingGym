@@ -1,0 +1,8 @@
+# To run the DQN agent
+
+cd OpenAI-GYM-CarRacing-DQN/
+python3.10 play_car_racing_by_the_model.py -m save/trial_600.h5 -e 100
+
+# To run the PID+CV agent
+cd racingGym/
+ 
