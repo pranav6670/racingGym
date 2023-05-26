@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-
+plt.style.use('ggplot')
 def visualize_images(blur, canny):
     # Concatenate the images horizontally
     combined_image = np.hstack((blur, canny))
@@ -108,4 +108,8 @@ for x in [1, 0] * 500:
 
 print(reward_arr)
 plt.plot(reward_arr)
+plt.title("Rewards v.s. episodes")
+plt.xlabel("Episodes")
+plt.ylabel("Rewards")
+plt.grid(True)
 plt.show()
